@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "lint": "eslint src",
+    "dev": "vite & npm run lint",
+    "lint": "esw --color -w src/** --ext .vue,.ts,.js --no-error-on-unmatched-pattern",
     "build": "vite build"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "eslint": "^7.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^7.0.1",
+    "eslint-watch": "^7.0.0",
     "node-sass": "^4.14.1",
     "prettier": "^2.1.2",
     "sass": "^1.27.0",
