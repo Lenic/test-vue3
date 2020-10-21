@@ -1,7 +1,7 @@
 import Router from "@koa/router";
 
 const mockSetup = () => {
-  const router = new Router({ prefix: "/api" });
+  const router = new Router({ prefix: "/api/mock" });
 
   return ({ app }) => {
     router.get("/test", (ctx, next) => {
