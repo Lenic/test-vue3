@@ -45,13 +45,13 @@ const ComposeFunc = <R, T>(
 export const compose = <R, T>(
   defaultAction: (options: T) => ComposeResult<R>,
   ...plugins: ComposePlugin<R, T>[]
-): ComposeDirection<R, T> =>
+): ComposeInstance<R, T> =>
   ComposeFunc(ComposeDirection.LEFT_TO_RIGHT, defaultAction, plugins);
 
 export const composeRight = <R, T>(
   defaultAction: (options: T) => ComposeResult<R>,
   ...plugins: ComposePlugin<R, T>[]
-): ComposeDirection<R, T> =>
+): ComposeInstance<R, T> =>
   ComposeFunc(ComposeDirection.RIGHT_TO_LEFT, defaultAction, plugins);
 
 export default ComposeFunc;
