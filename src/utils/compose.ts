@@ -10,17 +10,22 @@ export interface ComposePlugin<R, T> {
 }
 
 export interface ComposeInstance<R, T> {
-  add(...newPlugins: ComposePlugin<R, T>[]): ComposeInstance<R, T>;
+  add(newPlugin: ComposePlugin<R, T>): ComposeInstance<R, T>;
   exec(options: T): ComposeResult<R>;
 }
+
+export type ComposeType = <R, T>(
+  defaultAction: (options: T) => ComposeResult<R>,
+  ...plugins: ComposePlugin<R, T>[]
+) => ComposeInstance<R, T>;
 
 const ComposeFunc = <R, T>(
   direction: ComposeDirection,
   defaultAction: (options: T) => ComposeResult<R>,
   plugins: ComposePlugin<R, T>[]
 ): ComposeInstance<R, T> => ({
-  add(...newPlugins) {
-    return ComposeFunc(direction, defaultAction, [...plugins, ...newPlugins]);
+  add(newPlugin) {
+    return ComposeFunc(direction, defaultAction, [...plugins, newPlugin]);
   },
   exec(options) {
     const method =
@@ -37,11 +42,12 @@ const ComposeFunc = <R, T>(
   }
 });
 
-export const compose: ComposeInstance<R, T> = <R, T>(
+export const compose = <R, T>(
   defaultAction: (options: T) => ComposeResult<R>,
   ...plugins: ComposePlugin<R, T>[]
-) => ComposeFunc<R, T>(ComposeDirection.LEFT_TO_RIGHT, defaultAction, plugins);
-export const composeRight: ComposeInstance<R, T> = <R, T>(
+) => ComposeFunc(ComposeDirection.LEFT_TO_RIGHT, defaultAction, plugins);
+
+export const composeRight = <R, T>(
   defaultAction: (options: T) => ComposeResult<R>,
   ...plugins: ComposePlugin<R, T>[]
 ) => ComposeFunc(ComposeDirection.RIGHT_TO_LEFT, defaultAction, plugins);

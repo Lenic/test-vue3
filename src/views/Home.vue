@@ -8,7 +8,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import HelloWorld from "/@/components/HelloWorld.vue"; // @ is an alias to /src
-import { composeRight } from "../utils/compose";
+import { compose } from "../utils/compose";
 
 export default defineComponent({
   name: "Home",
@@ -16,7 +16,7 @@ export default defineComponent({
     HelloWorld
   },
   setup() {
-    let dd = composeRight<number, number>((c) => {
+    let dd = compose<number, number>((c) => {
       debugger;
       console.log("default");
 
@@ -27,21 +27,21 @@ export default defineComponent({
       debugger;
       console.log("run 2:");
 
-      return c + 2 + n();
+      return c + 2 + (n() as number);
     });
 
     dd = dd.add((n, c) => {
       debugger;
       console.log("run 3:");
 
-      return c + 3 + n();
+      return c + 3 + (n() as number);
     });
 
     dd = dd.add((n, c) => {
       debugger;
       console.log("run 4:");
 
-      return c + 4 + (n ? n() : 0);
+      return c + 4 + (n() as number);
     });
 
     console.log("result", dd.exec(10));
